@@ -5,3 +5,10 @@ services:
     build: ../react/
     ports:
       - "4000:4000"
+
+  nginx:
+    build: ../nginx/
+    ports:
+      - "8080:80"
+    depends_on:
+      - react
