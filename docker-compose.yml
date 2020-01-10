@@ -11,6 +11,17 @@ services:
     build: ../nginx/
     depends_on:
       - react
+      - postgres
     ports:
       - "8080:80"
     restart: always
+
+  postgres:
+    build: ./
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: postgres
