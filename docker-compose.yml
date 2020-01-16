@@ -3,25 +3,48 @@ version: "3.7"
 services:
   react:
     build: ../react/
+    image: simify_react:latest
     ports:
       - "5000:5000"
     restart: always
 
   nginx:
     build: ../nginx/
+    image: simify_nginx:latest
     depends_on:
       - react
-      - postgres
+      # - postgres
+      # - graphile
     ports:
       - "8080:80"
     restart: always
-
-  postgres:
-    build: ./
-    ports:
-      - "5432:5432"
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: postgres
+  # postgres:
+  #   build: ../postgres/
+  #   image: simify_postgres:latest
+  #   ports:
+  #     - "5432:5432"
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: secret
+  #     POSTGRES_DB: postgres
+  # graphile:
+  #   build: ../graphile/
+  #   image: simify_graphile:latest
+  #   depends_on:
+  #     - postgres
+  #   ports:
+  #     - "4000:4000"
+  #   restart: always
+  #   command:
+  #     [
+  #       "--connection",
+  #       "postgres://postgres:secret@postgres:5432/postgres",
+  #       "--host",
+  #       "0.0.0.0",
+  #       "--port",
+  #       "4000",
+  #       "--schema",
+  #       "api",
+  #       "--watch",
+  #     ]
